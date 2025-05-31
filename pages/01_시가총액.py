@@ -57,11 +57,6 @@ companies = {
     }
 }
 
-# 기업 설명 출력
-st.markdown("### 🏢 시가총액 상위 10개 기업 요약")
-for name, info in companies.items():
-    st.markdown(f"- **{name}**: {info['desc']}")
-
 start_date = (datetime.today() - timedelta(days=3*365)).strftime('%Y-%m-%d')
 end_date = datetime.today().strftime('%Y-%m-%d')
 
@@ -86,10 +81,15 @@ merged_df = pd.concat(data.values(), axis=1)
 merged_df.index = pd.to_datetime(merged_df.index)
 merged_df = merged_df.fillna(method="ffill")
 
-# 그래프 그리기
+# 그래프 먼저 출력
 fig = px.line(merged_df, x=merged_df.index, y=merged_df.columns,
               labels={'value': '시가총액 (USD)', 'index': '날짜'},
               title="Top 10 기업 시가총액 추이 (최근 3년)")
 fig.update_layout(legend_title_text='기업명')
 
 st.plotly_chart(fig, use_container_width=True)
+
+# 기업 선택 시 설명 출력
+st.markdown("### 🏢 기업 설명 보기")
+selected_company = st.selectbox("기업을 선택하세요", list(companies.keys()))
+st.info(f"**{selected_company}**: {companies[selected_company]['desc']}")
