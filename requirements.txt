@@ -2,3 +2,7 @@ plotly
 folium
 koreanize_matplotlib
 streamlit-folium
+streamlit
+plotly
+pandas
+yfinance
