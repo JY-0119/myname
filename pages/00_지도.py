@@ -1,6 +1,8 @@
 import streamlit as st
 import folium
-from streamlit.components.v1 import components
+from streamlit.components.v1 import html
+import tempfile
+import os
 
 # 여행지 데이터
 locations = [
@@ -32,8 +34,16 @@ for loc in locations:
         icon=folium.Icon(color="blue", icon="info-sign")
     ).add_to(m)
 
-# Folium 지도 HTML로 변환
-map_html = m._repr_html_()
+# 임시 파일로 저장 후 불러오기
+with tempfile.NamedTemporaryFile(delete=False, suffix=".html") as tmp_file:
+    m.save(tmp_file.name)
+    tmp_path = tmp_file.name
 
-# 지도 출력
-components.html(map_html, height=600, scrolling=False)
+# HTML 내용 읽어서 출력
+with open(tmp_path, "r", encoding="utf-8") as f:
+    map_html = f.read()
+
+html(map_html, height=600, scrolling=False)
+
+# 사용 후 임시 파일 제거
+os.remove(tmp_path)
