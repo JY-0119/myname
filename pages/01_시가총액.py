@@ -79,16 +79,8 @@ selected_company = st.selectbox("기업을 선택하세요", list(companies.keys
 
 selected_rank = ranking_df.get("Rank", pd.Series()).get(selected_company)
 
-# 순위 라벨
-if selected_rank == 1:
-    rank_label = "1위"
-elif selected_rank <= 3:
-    rank_label = "Top 3"
-elif selected_rank <= 5:
-    rank_label = "중상위권"
-else:
-    rank_label = "하위권"
+# 명확한 순위 표현 (예: 1위, 2위 ...)
+rank_label = f"{int(selected_rank)}위" if selected_rank else "순위 정보 없음"
 
 desc = companies[selected_company]["desc"]
 st.info(f"**{selected_company}** ({rank_label}): {desc}")
-
