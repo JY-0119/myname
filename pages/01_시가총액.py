@@ -43,38 +43,4 @@ def load_data():
             data[name] = df
             latest_market_caps[name] = df[name].dropna().iloc[-1]
         except Exception as e:
-            st.warning(f"{name} 데이터 수집 실패: {e}")
-    return data, latest_market_caps
-
-data, latest_market_caps = load_data()
-
-# 병합
-merged_df = pd.concat(data.values(), axis=1)
-merged_df.index = pd.to_datetime(merged_df.index)
-merged_df = merged_df.fillna(method="ffill")
-
-# 시계열 그래프
-fig = px.line(merged_df, x=merged_df.index, y=merged_df.columns,
-              labels={'value': '시가총액 (USD)', 'index': '날짜'},
-              title="Top 10 기업 시가총액 추이 (최근 3년)")
-fig.update_layout(legend_title_text='기업명')
-st.plotly_chart(fig, use_container_width=True)
-
-# 💡 현재 시가총액 순위 시각화
-st.markdown("### 📊 현재 시가총액 순위 (USD 기준)")
-ranking_df = pd.DataFrame.from_dict(latest_market_caps, orient='index', columns=['Market Cap'])
-ranking_df = ranking_df.sort_values(by='Market Cap', ascending=False)
-ranking_df['Rank'] = range(1, len(ranking_df)+1)
-
-rank_fig = px.bar(ranking_df, x=ranking_df.index, y='Market Cap',
-                  color='Market Cap', color_continuous_scale='blues',
-                  title="기업별 최신 시가총액 (순위 기준)")
-rank_fig.update_layout(xaxis_title="기업명", yaxis_title="시가총액 (USD)", coloraxis_showscale=False)
-st.plotly_chart(rank_fig, use_container_width=True)
-
-# 🎯 기업 설명 (선택 기반) + 순위 라벨
-st.markdown("### 🏢 기업 설명 보기")
-selected_company = st.selectbox("기업을 선택하세요", list(companies.keys()))
-selected_rank = ranking_df.loc[selected_company, 'Rank']
-
-# 순위 라벨 지정
+            st.warning(f"{name} 데이터 수집 실
