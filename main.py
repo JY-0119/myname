@@ -86,6 +86,5 @@ if mbti:
         else:
             st.success("🎒 멋진 여행이 될 거예요!")
 
-# 🧸 하단
-st.markdown("---
-
+st.markdown("---")
+st.markdown("Made with ❤️ by Streamlit")
