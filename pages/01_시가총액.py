@@ -70,7 +70,12 @@ ranking_df.index = ranking_df.index.astype(str)
 rank_fig = px.bar(ranking_df, x=ranking_df.index, y='Market Cap',
                   color='Market Cap', color_continuous_scale='blues',
                   title="기업별 최신 시가총액 (순위 기준)")
-rank_fig.update_layout(xaxis_title="기업명", yaxis_title="시가총액 (USD)", coloraxis_showscale=False)
+rank_fig.update_layout(
+    xaxis_title="기업명",
+    yaxis_title="시가총액 (USD)",
+    coloraxis_showscale=False,
+    height=300  # 막대그래프 높이 조절
+)
 st.plotly_chart(rank_fig, use_container_width=True)
 
 # 🏢 기업 설명 선택 박스
