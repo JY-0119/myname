@@ -1,7 +1,4 @@
 import streamlit as st
-st.title('나의 첫 웹앱 사이트')
-st.write('ddddd')
-import streamlit as st
 
 # 🎉 페이지 설정
 st.set_page_config(page_title="MBTI 여행 추천기 ✈️", page_icon="🌍", layout="centered")
